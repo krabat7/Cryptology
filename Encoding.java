@@ -4,20 +4,27 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Encoding {
-    private String line;
+    private String lineFromFile;
+    private static String originalPassword;
+    private static String encryptedPassword;
     public static void main(String[] args) {
         Encoding encoding = new Encoding();
-        encoding.takePassword();
+        originalPassword = encoding.takePassword();
     }
     private String takePassword(){
         System.out.print("Введите путь расположения файла с паролем: ");
         Scanner scanner = new Scanner(System.in);
         try(BufferedReader bufferedReader = new BufferedReader(new FileReader(scanner.nextLine()))){
-            line = bufferedReader.readLine();
-            System.out.println(line);
+            lineFromFile = bufferedReader.readLine();
+            System.out.println(lineFromFile);
         }catch(IOException e){
             e.printStackTrace();
         }
-        return line;
+        return lineFromFile;
+    }
+    private void getEncryptedKey(String originalPassword){
+        CryptoAlphabet cryptoAlphabet = new CryptoAlphabet();
+        cryptoAlphabet.getCryptoAlphabet();
     }
 }
+
