@@ -28,6 +28,14 @@ public class Encoding {
         System.out.print("Введите путь расположения файла с паролем: ");
         Scanner scanner = new Scanner(System.in);
         path = scanner.nextLine();
+        File file = new File(path);
+        while(!file.exists() || file.isDirectory()){
+            if (!file.exists()){
+                System.out.print("Файла не найден, введите путь еще раз: ");
+                path = scanner.nextLine();
+                file = new File(path);
+            }
+        }
         try(BufferedReader bufferedReader = new BufferedReader(new FileReader(path))){
             lineFromFile = bufferedReader.readLine();
             System.out.println(lineFromFile);
