@@ -12,26 +12,29 @@ public class Encoding {
     private static String encryptedPassword;
     // Криптографический ключ
     private static int cryptoKey;
-    private static String path;
+    private static final String fileName = "encryptedPassword.txt"; // Имя файла, в который будет записан зашифрованный пароль
+    public String path;
     public static void main(String[] args) {
         Encoding encoding = new Encoding();
         cryptoKey = CryptoKey.getCryptoKey(); // Получение криптографического ключа
         originalPassword = encoding.takePassword();
         encryptedPassword = encoding.getEncryptedKey();
-        encoding.createFileWithEncryptedPassword();
+        encoding.createFileWithEncryptedPassword(fileName, encryptedPassword);
         System.out.println(encryptedPassword);
     }
 
     // Получение исходного пароля из текстового файла
-    private String takePassword(){
+    public String takePassword(){
         String lineFromFile = null;
         System.out.print("Введите путь расположения файла с паролем: ");
         Scanner scanner = new Scanner(System.in);
         path = scanner.nextLine();
+        path = path.replace("/", File.separator);
+        path = path.replace("\\", File.separator);
         File file = new File(path);
         while(!file.exists() || file.isDirectory()){
             if (!file.exists()){
-                System.out.print("Файла не найден, введите путь еще раз: ");
+                System.out.print("Файл не найден, введите путь еще раз: ");
                 path = scanner.nextLine();
                 file = new File(path);
             }
@@ -63,7 +66,7 @@ public class Encoding {
     }
 
     // Преобразование строки в лист
-    private ArrayList<Character> getList(String str){
+    public ArrayList<Character> getList(String str){
         ArrayList<Character> listAlphabet = new ArrayList<>();
         for (char c : str.toCharArray()) {
             listAlphabet.add(c);
@@ -72,16 +75,15 @@ public class Encoding {
     }
 
     // Преобразование листа в строку
-    private String getString(ArrayList<Character> arrayList){
+    public String getString(ArrayList<Character> arrayList){
         StringBuilder sb = new StringBuilder();
         for (char i : arrayList){
             sb.append(i);
         }
         return sb.toString();
     }
-    // Создание файла и директории и запись зашифрованного пароля в новосозданный файл
-    private void createFileWithEncryptedPassword(){
-        String fileName = "encryptedPassword.txt";
+    // Создание файла и директории и запись пароля в новосозданный файл
+    public void createFileWithEncryptedPassword(String fileName, String password){
         Path filePathDirectory = Path.of(path).getParent();
         // Создание директории, если такой не сущетсвует
         if (!Files.exists(filePathDirectory)){
@@ -95,11 +97,11 @@ public class Encoding {
         Path filePath = Paths.get(filePathDirectory.toString(), fileName);
         // Создание файла, если такой не сущетсвует
         if (Files.exists(filePath)){
-            writeEncryptedPasswordInFile(filePath.toString());
+            writeEncryptedPasswordInFile(filePath.toString(), password);
         }else{
             try{
                 Files.createFile(filePath);
-                writeEncryptedPasswordInFile(filePath.toString());
+                writeEncryptedPasswordInFile(filePath.toString(), password);
             }catch (IOException e){
                 System.out.println("Ошибка при создании файла");
                 e.printStackTrace();
@@ -107,11 +109,11 @@ public class Encoding {
         }
     }
     // Запись зашифрованного пароля в новосозданный файл
-    private void writeEncryptedPasswordInFile(String fileName){
+    private void writeEncryptedPasswordInFile(String fileName, String password){
         try(FileWriter fileWriter = new FileWriter(fileName)){
-            fileWriter.write(encryptedPassword);
+            fileWriter.write(password);
         } catch (IOException e) {
-            System.out.println("Ошибка при записи шифрованного пароля в файл");
+            System.out.println("Ошибка при записи пароля в файл");
             e.printStackTrace();
         }
     }
