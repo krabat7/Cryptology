@@ -3,15 +3,24 @@ import java.util.ArrayList;
 public class Decoding {
     private static String originalPassword;
     private static String encryptedPassword;
-    private static final String fileName = "originalPassword.txt"; // Имя файла, в который будет записан расшифрованный пароль
+    public static final String fileName = "originalPassword.txt"; // Имя файла, в который будет записан расшифрованный пароль
+
     public static void main(String[] args) {
         Encoding encoding = new Encoding();
         Decoding decoding = new Decoding();
+
         encryptedPassword = encoding.takePassword(); // Извлекаем зашифрованный пароль из файла
         originalPassword = decoding.getOriginalKey(); // Расшифровка зашифрованного пароля
         encoding.createFileWithEncryptedPassword(fileName, originalPassword);
         System.out.println(originalPassword);
     }
+//    public Decoding(){
+//        Encoding encoding = new Encoding();
+//        encryptedPassword = encoding.takePassword(); // Извлекаем зашифрованный пароль из файла
+//        originalPassword = getOriginalKey(); // Расшифровка зашифрованного пароля
+//        encoding.createFileWithEncryptedPassword(fileName, originalPassword);
+//        System.out.println(originalPassword);
+//    }
     // Получение расшифрованного пароля
     private String getOriginalKey() {
         CryptoAlphabet cryptoAlphabet = new CryptoAlphabet();
