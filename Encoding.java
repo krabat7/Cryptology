@@ -10,17 +10,14 @@ public class Encoding {
     private static String originalPassword;
     // Зашифрованный пароль
     private static String encryptedPassword;
-    // Криптографический ключ
-    private static int cryptoKey;
-    public static final String fileName = "encryptedPassword.txt"; // Имя файла, в который будет записан зашифрованный пароль
+    public static final String FILE_NAME = "encryptedPassword.txt"; // Имя файла, в который будет записан зашифрованный пароль
     public String path;
 
     public static void main(String[] args) {
         Encoding encoding = new Encoding();
-        cryptoKey = CryptoKey.getCryptoKey();
         originalPassword = encoding.takePassword();
         encryptedPassword = encoding.getEncryptedKey();
-        encoding.createFileWithEncryptedPassword(fileName, encryptedPassword);
+        encoding.createFileWithEncryptedPassword(FILE_NAME, encryptedPassword);
         System.out.println(encryptedPassword);
     }
 //    public Encoding(){
@@ -66,7 +63,7 @@ public class Encoding {
         for (int i = 0; i < listPassword.size(); i++) {
             Character currentChar = listPassword.get(i);
             if (listAlphabet.contains(currentChar)) {
-                int newIndex = (listAlphabet.indexOf(currentChar) + cryptoKey) % listAlphabet.size();
+                int newIndex = (listAlphabet.indexOf(currentChar) + CryptoKey.getCryptoKey()) % listAlphabet.size();
                 listPassword.set(i, listAlphabet.get(newIndex));
             }
         }
