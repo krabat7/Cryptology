@@ -38,7 +38,7 @@ public class BruteForce {
             Character currentChar = listPassword.get(i);
             if (listAlphabet.contains(currentChar)) {
                 int cryptoKey = 0;
-                while (cryptoKey <= cryptoAlphabet.getCryptoAlphabet().length()) {
+                while (cryptoKey < cryptoAlphabet.getCryptoAlphabet().length()) {
                     int newIndex = (listAlphabet.indexOf(currentChar) - CryptoKey.getCryptoKey() + listAlphabet.size()) % listAlphabet.size();
                     listPassword.set(i, listAlphabet.get(newIndex));
                     password = encoding.getString(listPassword);
@@ -48,6 +48,9 @@ public class BruteForce {
                     } else {
                         cryptoKey++;
                     }
+                }
+                if (cryptoKey == cryptoAlphabet.getCryptoAlphabet().length()){
+                    return "Извините, но ваш пароль не был расшифрован.";
                 }
             }
         }
