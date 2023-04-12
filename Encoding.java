@@ -12,16 +12,24 @@ public class Encoding {
     private static String encryptedPassword;
     // Криптографический ключ
     private static int cryptoKey;
-    private static final String fileName = "encryptedPassword.txt"; // Имя файла, в который будет записан зашифрованный пароль
+    public static final String fileName = "encryptedPassword.txt"; // Имя файла, в который будет записан зашифрованный пароль
     public String path;
+
     public static void main(String[] args) {
         Encoding encoding = new Encoding();
-        cryptoKey = CryptoKey.getCryptoKey(); // Получение криптографического ключа
+        cryptoKey = CryptoKey.getCryptoKey();
         originalPassword = encoding.takePassword();
         encryptedPassword = encoding.getEncryptedKey();
         encoding.createFileWithEncryptedPassword(fileName, encryptedPassword);
         System.out.println(encryptedPassword);
     }
+//    public Encoding(){
+//        cryptoKey = CryptoKey.getCryptoKey(); // Получение криптографического ключа
+//        originalPassword = takePassword();
+//        encryptedPassword = getEncryptedKey();
+//        createFileWithEncryptedPassword(fileName, encryptedPassword);
+//        System.out.println(encryptedPassword);
+//    }
 
     // Получение исходного пароля из текстового файла
     public String takePassword(){
