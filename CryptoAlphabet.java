@@ -4,4 +4,7 @@ public class CryptoAlphabet {
     public String getCryptoAlphabet(){
         return ALPHABET + PUNCTUATION_MARKS;
     }
+    public String getPunctuationMarks(){
+        return PUNCTUATION_MARKS;
+    }
 }
