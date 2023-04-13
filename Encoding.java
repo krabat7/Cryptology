@@ -20,14 +20,6 @@ public class Encoding {
         encoding.createFileWithEncryptedPassword(FILE_NAME, encryptedPassword);
         System.out.println(encryptedPassword);
     }
-//    public Encoding(){
-//        cryptoKey = CryptoKey.getCryptoKey(); // Получение криптографического ключа
-//        originalPassword = takePassword();
-//        encryptedPassword = getEncryptedKey();
-//        createFileWithEncryptedPassword(fileName, encryptedPassword);
-//        System.out.println(encryptedPassword);
-//    }
-
     // Получение исходного пароля из текстового файла
     public String takePassword(){
         String lineFromFile = null;
