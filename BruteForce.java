@@ -28,7 +28,7 @@ public class BruteForce {
         CryptoAlphabet cryptoAlphabet = new CryptoAlphabet();
         while (cryptoKey <= cryptoAlphabet.getCryptoAlphabet().length()) {
             String password = decoding.getOriginalKey(encryptedPassword, cryptoKey);
-            if (Math.round(1.0f * findCountOfWhiteSpace(password) / password.length() * 100) > avgPercentageOfSpace && isPunctuationMarksOnRightPlace(password)) {
+            if (Math.round(1.0f * findCountOfWhiteSpace(password) / password.length() * 100) >= avgPercentageOfSpace && isPunctuationMarksOnRightPlace(password)) {
                 return password;
             }
             cryptoKey++;

@@ -29,8 +29,8 @@ public class Decoding {
         ArrayList<Character> listPassword = encoding.getList(encryptedPassword);
         for (int i = 0; i < listPassword.size(); i++) {
             Character currentChar = listPassword.get(i);
-            if (listAlphabet.contains(currentChar)) {
-                int newIndex = (listAlphabet.indexOf(currentChar) - cryptoKey + listAlphabet.size()) % listAlphabet.size();
+            if (listAlphabet.contains(Character.toLowerCase(currentChar))) {
+                int newIndex = (listAlphabet.indexOf(Character.toLowerCase(currentChar)) - cryptoKey + listAlphabet.size()) % listAlphabet.size();
                 listPassword.set(i, listAlphabet.get(newIndex));
             }
         }

@@ -62,8 +62,8 @@ public class Encoding {
         ArrayList<Character> listPassword = getList(originalPassword);
         for (int i = 0; i < listPassword.size(); i++) {
             Character currentChar = listPassword.get(i);
-            if (listAlphabet.contains(currentChar)) {
-                int newIndex = (listAlphabet.indexOf(currentChar) + CryptoKey.getCryptoKey()) % listAlphabet.size();
+            if (listAlphabet.contains(Character.toLowerCase(currentChar))) {
+                int newIndex = (listAlphabet.indexOf(Character.toLowerCase(currentChar)) + CryptoKey.getCryptoKey()) % listAlphabet.size();
                 listPassword.set(i, listAlphabet.get(newIndex));
             }
         }
