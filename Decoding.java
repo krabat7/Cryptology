@@ -20,8 +20,10 @@ public class Decoding {
     public String getOriginalKey(String password, int cryptoKey) {
         CryptoAlphabet cryptoAlphabet = new CryptoAlphabet();
         Encoding encoding = new Encoding();
+
         ArrayList<Character> listAlphabet = encoding.getList(cryptoAlphabet.getCryptoAlphabet());
         ArrayList<Character> listPassword = encoding.getList(password);
+
         for (int i = 0; i < listPassword.size(); i++) {
             Character currentChar = listPassword.get(i);
             if (listAlphabet.contains(Character.toLowerCase(currentChar))) {
@@ -29,18 +31,21 @@ public class Decoding {
                 listPassword.set(i, listAlphabet.get(newIndex));
             }
         }
-        String tempOriginalPassword = encoding.getString(listPassword);
-        if (Math.round(1.0f * findCountOfWhiteSpace(tempOriginalPassword) / tempOriginalPassword.length() * 100) >= BruteForce.avgPercentageOfSpace && isPunctuationMarksOnRightPlace(tempOriginalPassword)) {
-            return tempOriginalPassword;
+
+        originalPassword = encoding.getString(listPassword);
+        char whiteSpace = ' ';
+
+        if (Math.round(1.0f * findCountOfChar(whiteSpace) / originalPassword.length() * 100) >= BruteForce.avgPercentageOfSpace && isPunctuationMarksOnRightPlace(originalPassword)) {
+            return originalPassword;
         }
         return ERROR_MESSAGE;
     }
     // Метод возвращает количество пробелов в расшифрованном тексте
-    private int findCountOfWhiteSpace(String password){
-        char[] arr = password.toCharArray();
+    public int findCountOfChar(Character character){
+        char[] arr = originalPassword.toCharArray();
         int count = 0;
         for (char c : arr){
-            if (c == ' '){
+            if (c == character){
                 count++;
             }
         }
