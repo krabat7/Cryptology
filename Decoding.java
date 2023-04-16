@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 
+/**
+ * Класс, реализующий расшифровку по криптографическому ключу
+ */
 public class Decoding {
     private final String originalPassword;
     public static final String ERROR_MESSAGE = "Извините, но ваш пароль не был расшифрован.";

@@ -1,3 +1,6 @@
+/**
+ * Класс, описывающий криптографичесчкий ключ
+ */
 public class CryptoKey {
     private static final int cryptoKey = 6; // Число для сдвига (Шифр Цезаря)
 

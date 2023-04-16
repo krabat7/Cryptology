@@ -1,3 +1,6 @@
+/**
+ * Класс, реализующий расшифровку методом brute force (грубой силой)
+ */
 public class BruteForce {
     private final String encryptedPassword;
     public static final int avgPercentageOfSpace = 12; // Средняя частота вхождения пробела в тексте в процентах

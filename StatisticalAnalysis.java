@@ -2,6 +2,9 @@ import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Класс, реализующий расшифровку методом статистического анализа
+ */
 public class StatisticalAnalysis {
     /**
      * Конструктор класса

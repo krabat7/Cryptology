@@ -5,6 +5,9 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Класс, реализующий щифрование по криптографическому ключу
+ */
 public class Encoding {
     private String path;
     private static final String ERROR_MESSAGE = "Извините, однако мы не можем зашифровать ваш пароль, так как он не содержит хотя бы одного символа из кириллицы или знака пунктуации.";

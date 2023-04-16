@@ -1,3 +1,6 @@
+/**
+ * Класс, описывающий криптографичесчкий алфавит
+ */
 public class CryptoAlphabet {
     private static final String ALPHABET = "абвгдеёжзийклмнопрстуфхцчшщьыъэюя";
     private static final String PUNCTUATION_MARKS = ".,””:-!?";
