@@ -3,31 +3,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StatisticalAnalysis {
-    private static String originalPassword;
-    private static String encryptedPassword;
-    private static String additionalText;
-    private static Map<Character, Integer> mapPassword; // Мапа со статисткой вхождений символа в пароль
-    private static Map<Character, Integer> mapAdditionalText; // Мапа со статисткой вхождений символа в дополнительный текст
-    public static void main(String[] args) {
-
+    /**
+     * Конструктор класса
+     */
+    public StatisticalAnalysis() {
         Encoding encoding = new Encoding();
-        encryptedPassword = encoding.takePassword();
-        additionalText = encoding.takePassword();
-
-        mapPassword = getStatsFromText(encryptedPassword);
-        mapAdditionalText = getStatsFromText(additionalText);
-
-        originalPassword = getOriginalPasswordFromStat(mapPassword, mapAdditionalText);
+        String encryptedPassword = encoding.takePassword();
+        String additionalText = encoding.takePassword();
+        String originalPassword = getOriginalPasswordFromStat(encryptedPassword, additionalText);
         encoding.createFileWithEncryptedPassword(Decoding.FILE_NAME, originalPassword);
     }
-    // Получение исходного пароля, исходя из статистики вхождения символов,
-    // которая была получена из дополнительного файла
-    private static String getOriginalPasswordFromStat(Map<Character, Integer> mapPassword, Map<Character, Integer> mapAdditionalText){
+
+    /**
+     * Метод, который расшифровывает пароль путем статистического анализа
+     * @param encryptedPassword Зашифрованный пароль
+     * @param additionalText Дополнительный текст для статистики
+     * @return encryptedPassword Зашифрованный пароль
+     */
+    public String getOriginalPasswordFromStat(String encryptedPassword, String additionalText){
+        Map<Character, Integer> mapPassword = getStatsFromText(encryptedPassword); // Мапа со статисткой вхождений символа в пароль
+        Map<Character, Integer> mapAdditionalText = getStatsFromText(additionalText); // Мапа со статисткой вхождений символа в дополнительный текст
 
         // Получаем итераторы для каждой мапы
         Iterator<Map.Entry<Character, Integer>> iterator1 = mapPassword.entrySet().iterator();
         Iterator<Map.Entry<Character, Integer>> iterator2 = mapAdditionalText.entrySet().iterator();
-        ArrayList<Integer> listOfUsedChar = new ArrayList<>();
+        ArrayList<Integer> listOfUsedChar = new ArrayList<>(); // Лист использованных индексов в пароле
 
         while (iterator1.hasNext()) {
             Map.Entry<Character, Integer> entry1 = iterator1.next();
@@ -41,14 +41,16 @@ public class StatisticalAnalysis {
                     listOfUsedChar.add(i);
                 }
             }
-            encryptedPassword.replace(oldChar, newChar);
         }
         return encryptedPassword;
-
     }
-    // Метод для получения мапы, в которой собрана статистика по вхождению символов в тексте по убыванию
-    private static Map<Character, Integer> getStatsFromText(String text){
 
+    /**
+     * Метод, создающий мапу, в которой собрана статистика по вхождению символов в тексте по убыванию
+     * @param text Строка
+     * @return sortedMap Отсортированная по убыванию количества вхождений символа мапа
+     */
+    private static Map<Character, Integer> getStatsFromText(String text){
         HashMap<Character, Integer> map = new HashMap<>();
 
         for(int i = 0; i < text.length(); i++) {
@@ -71,6 +73,5 @@ public class StatisticalAnalysis {
             sortedMap.put(entry.getKey(), entry.getValue());
         }
         return sortedMap;
-
     }
 }

@@ -1,26 +1,29 @@
 import java.util.ArrayList;
 
 public class Decoding {
-    private static String originalPassword;
-    private static String encryptedPassword;
+    private final String originalPassword;
     public static final String ERROR_MESSAGE = "Извините, но ваш пароль не был расшифрован.";
     public static final String FILE_NAME = "originalPassword.txt"; // Имя файла, в который будет записан расшифрованный пароль
 
-    public static void main(String[] args) {
+    /**
+     * Конструктор класса
+     */
+    public Decoding() {
         Encoding encoding = new Encoding();
-        Decoding decoding = new Decoding();
-
-        encryptedPassword = encoding.takePassword(); // Извлекаем зашифрованный пароль из файла
-        originalPassword = decoding.getOriginalKey(encryptedPassword, CryptoKey.getCryptoKey()); // Расшифровка зашифрованного пароля
+        String encryptedPassword = encoding.takePassword(); // Извлекаем зашифрованный пароль из файла
+        originalPassword = getOriginalKey(encryptedPassword, CryptoKey.getCryptoKey()); // Расшифровка зашифрованного пароля
         encoding.createFileWithEncryptedPassword(FILE_NAME, originalPassword);
     }
-    // Метод реализует проверку на частоту использования пробелов и позицию знаков пунткуации в тексте,
-    // Возвращает расшифрованный пароль.
-    public String getOriginalKey(String password, int cryptoKey) {
-        CryptoAlphabet cryptoAlphabet = new CryptoAlphabet();
-        Encoding encoding = new Encoding();
 
-        ArrayList<Character> listAlphabet = encoding.getList(cryptoAlphabet.getCryptoAlphabet());
+    /**
+     * Метод, который реализует проверку на частоту использования пробелов и позицию знаков пунткуации в тексте
+     * @param password Зашифрованный пароль
+     * @param cryptoKey Криптографический ключ
+     * @return originalPassword Расшифрованный пароль
+     */
+    public String getOriginalKey(String password, int cryptoKey) {
+        Encoding encoding = new Encoding();
+        ArrayList<Character> listAlphabet = encoding.getList(CryptoAlphabet.getCryptoAlphabet());
         ArrayList<Character> listPassword = encoding.getList(password);
 
         for (int i = 0; i < listPassword.size(); i++) {
@@ -31,16 +34,20 @@ public class Decoding {
             }
         }
 
-        originalPassword = encoding.getString(listPassword);
+        String origPassword = encoding.getString(listPassword);
         char whiteSpace = ' ';
-
-        if (Math.round(1.0f * findCountOfChar(whiteSpace) / originalPassword.length() * 100) >= BruteForce.avgPercentageOfSpace && isPunctuationMarksOnRightPlace(originalPassword)) {
-            return originalPassword;
+        if (Math.round(1.0f * findCountOfChar(whiteSpace) / origPassword.length() * 100) >= BruteForce.avgPercentageOfSpace && isPunctuationMarksOnRightPlace(origPassword)) {
+            return origPassword;
         }
         return ERROR_MESSAGE;
     }
-    // Метод возвращает количество пробелов в расшифрованном тексте
-    public int findCountOfChar(Character character){
+
+    /**
+     * Метод, который высчитывает количество пробелов в расшифрованном тексте
+     * @param character Символ
+     * @return count Число вхождений символа в текст
+     */
+    private int findCountOfChar(Character character){
         char[] arr = originalPassword.toCharArray();
         int count = 0;
         for (char c : arr){
@@ -50,15 +57,16 @@ public class Decoding {
         }
         return count;
     }
-    //Метод проверяет знак пунктуации (без пробела) на его положение в тексте пароля
-    //Если знак находится между 2мя буквами алфавита, то кидает false.
-    private boolean isPunctuationMarksOnRightPlace(String password){
-        CryptoAlphabet cryptoAlphabet = new CryptoAlphabet();
 
+    /**
+     * Метод, который проверяет знак пунктуации (без пробела) на его положение в тексте пароля
+     * @param password Пароль
+     */
+    private boolean isPunctuationMarksOnRightPlace(String password){
         String[] arr = password.split("");
         for (int i = 1; i < arr.length - 1; i++) {
-            if (cryptoAlphabet.getPunctuationMarks().contains(arr[i])){
-                if (cryptoAlphabet.getALPHABET().contains(arr[i - 1]) && cryptoAlphabet.getALPHABET().contains(arr[i + 1])){
+            if (CryptoAlphabet.getPunctuationMarks().contains(arr[i])){
+                if (CryptoAlphabet.getALPHABET().contains(arr[i - 1]) && CryptoAlphabet.getALPHABET().contains(arr[i + 1])){
                     return false;
                 }
             }
