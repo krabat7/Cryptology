@@ -17,16 +17,8 @@ public class StatisticalAnalysis {
         mapPassword = getStatsFromText(encryptedPassword);
         mapAdditionalText = getStatsFromText(additionalText);
 
-        for (var entry : mapPassword.entrySet()) {
-            System.out.println(entry.getKey() + " : " + entry.getValue());
-        }
-
-        for (var entry : mapAdditionalText.entrySet()) {
-            System.out.println(entry.getKey() + " - " + entry.getValue());
-        }
         originalPassword = getOriginalPasswordFromStat(mapPassword, mapAdditionalText);
-        System.out.println("Конечный пароль " + originalPassword);
-
+        encoding.createFileWithEncryptedPassword(Decoding.FILE_NAME, originalPassword);
     }
     // Получение исходного пароля, исходя из статистики вхождения символов,
     // которая была получена из дополнительного файла
@@ -42,8 +34,6 @@ public class StatisticalAnalysis {
             Map.Entry<Character, Integer> entry2 = iterator2.next();
             Character oldChar = entry1.getKey(); // Получение символа из зашифрованного пароля
             Character newChar = entry2.getKey(); // Получение символа из доплнительного текста
-            System.out.println(oldChar + " __ " + newChar);
-            System.out.println(encryptedPassword);
             encryptedPassword = encryptedPassword.replace(oldChar, newChar);
             char[] arrEncryptedPassword = encryptedPassword.toCharArray();
             for (int i = 0; i < arrEncryptedPassword.length; i++) {
@@ -51,7 +41,7 @@ public class StatisticalAnalysis {
                     listOfUsedChar.add(i);
                 }
             }
-            System.out.println(encryptedPassword.replace(oldChar, newChar));
+            encryptedPassword.replace(oldChar, newChar);
         }
         return encryptedPassword;
 

@@ -10,6 +10,7 @@ public class Encoding {
     private static String originalPassword;
     // Зашифрованный пароль
     private static String encryptedPassword;
+    public static final String ERROR_MESSAGE = "Извините, однако мы не можем зашифровать ваш пароль, так как он не содержит хотя бы одного символа из кириллицы или знака пунктуации.";
     public static final String FILE_NAME = "encryptedPassword.txt"; // Имя файла, в который будет записан зашифрованный пароль
     public String path;
 
@@ -18,7 +19,6 @@ public class Encoding {
         originalPassword = encoding.takePassword();
         encryptedPassword = encoding.getEncryptedKey();
         encoding.createFileWithEncryptedPassword(FILE_NAME, encryptedPassword);
-        System.out.println(encryptedPassword);
     }
     // Получение исходного пароля из текстового файла
     public String takePassword(){
@@ -62,6 +62,9 @@ public class Encoding {
                 listPassword.set(i, listAlphabet.get(newIndex));
             }
         }
+        if (getString(listPassword).equals(originalPassword)){
+            return ERROR_MESSAGE;
+        }
         return getString(listPassword);
     }
 
@@ -95,6 +98,7 @@ public class Encoding {
             }
         }
         Path filePath = Paths.get(filePathDirectory.toString(), fileName);
+        System.out.println("Полученный пароль: " + password);
         // Создание файла, если такой не сущетсвует
         if (Files.exists(filePath)){
             writeEncryptedPasswordInFile(filePath.toString(), password);

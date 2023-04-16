@@ -1,7 +1,7 @@
 public class BruteForce {
     private static String originalPassword;
     private static String encryptedPassword;
-    public static final int avgPercentageOfSpace = 12;
+    public static final int avgPercentageOfSpace = 12; // Средняя частота вхождения пробела в тексте в процентах
 
     public static void main(String[] args) {
         Encoding encoding = new Encoding();
@@ -9,12 +9,10 @@ public class BruteForce {
         encryptedPassword = encoding.takePassword();
         originalPassword = bruteForce.getOriginalKeyForBruteForce();
         encoding.createFileWithEncryptedPassword(Decoding.FILE_NAME, originalPassword);
-        System.out.println(originalPassword);
     }
 
     //Во время работы метода getOriginalKey, идет проверка на частоту использования пробелов в
-    //зашифрованном коде, за счет чего реализована логика перебора шифра
-    //с использованием разных криптографических ключей.
+    //зашифрованном коде, за счет чего реализована логика перебора шифра с использованием разных криптографических ключей.
     private String getOriginalKeyForBruteForce() {
         int cryptoKey = 0;
         Decoding decoding = new Decoding();

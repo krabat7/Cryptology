@@ -13,7 +13,6 @@ public class Decoding {
         encryptedPassword = encoding.takePassword(); // Извлекаем зашифрованный пароль из файла
         originalPassword = decoding.getOriginalKey(encryptedPassword, CryptoKey.getCryptoKey()); // Расшифровка зашифрованного пароля
         encoding.createFileWithEncryptedPassword(FILE_NAME, originalPassword);
-        System.out.println(originalPassword);
     }
     // Метод реализует проверку на частоту использования пробелов и позицию знаков пунткуации в тексте,
     // Возвращает расшифрованный пароль.
