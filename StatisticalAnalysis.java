@@ -56,7 +56,7 @@ public class StatisticalAnalysis {
         return encryptedPassword;
 
     }
-    // Метод для получения мапы, в которой собрана статистика по вхождению символов в тексте
+    // Метод для получения мапы, в которой собрана статистика по вхождению символов в тексте по убыванию
     private static Map<Character, Integer> getStatsFromText(String text){
 
         HashMap<Character, Integer> map = new HashMap<>();

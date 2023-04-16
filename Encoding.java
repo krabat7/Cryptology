@@ -26,6 +26,7 @@ public class Encoding {
         System.out.print("Введите путь расположения файла с паролем: ");
         Scanner scanner = new Scanner(System.in);
         path = scanner.nextLine();
+        // Можно указать путь для разных ОС с разными разделителями
         path = path.replace("/", File.separator);
         path = path.replace("\\", File.separator);
         File file = new File(path);
@@ -36,10 +37,12 @@ public class Encoding {
                 file = new File(path);
             }
         }
-        try(BufferedReader bufferedReader = new BufferedReader(new FileReader(path))){
-            lineFromFile = bufferedReader.readLine();
-            System.out.println(lineFromFile);
-        }catch(IOException e){
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
+            while ((lineFromFile = bufferedReader.readLine()) == null) {
+                System.out.print("Файл - пустой. ");
+                takePassword();
+            }
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return lineFromFile;
