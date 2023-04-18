@@ -7,17 +7,6 @@ import java.util.List;
  */
 public class StatisticalAnalysis {
     /**
-     * Конструктор класса
-     */
-    public StatisticalAnalysis() {
-        Encoding encoding = new Encoding();
-        String encryptedPassword = encoding.takePassword();
-        String additionalText = encoding.takePassword();
-        String originalPassword = getOriginalPasswordFromStat(encryptedPassword, additionalText);
-        encoding.createFileWithEncryptedPassword(Decoding.FILE_NAME, originalPassword);
-    }
-
-    /**
      * Метод, который расшифровывает пароль путем статистического анализа
      * @param encryptedPassword Зашифрованный пароль
      * @param additionalText Дополнительный текст для статистики

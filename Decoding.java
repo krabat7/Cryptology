@@ -4,19 +4,8 @@ import java.util.ArrayList;
  * Класс, реализующий расшифровку по криптографическому ключу
  */
 public class Decoding {
-    private final String originalPassword;
     public static final String ERROR_MESSAGE = "Извините, но ваш пароль не был расшифрован.";
     public static final String FILE_NAME = "originalPassword.txt"; // Имя файла, в который будет записан расшифрованный пароль
-
-    /**
-     * Конструктор класса
-     */
-    public Decoding() {
-        Encoding encoding = new Encoding();
-        String encryptedPassword = encoding.takePassword(); // Извлекаем зашифрованный пароль из файла
-        originalPassword = getOriginalKey(encryptedPassword, CryptoKey.getCryptoKey()); // Расшифровка зашифрованного пароля
-        encoding.createFileWithEncryptedPassword(FILE_NAME, originalPassword);
-    }
 
     /**
      * Метод, который реализует проверку на частоту использования пробелов и позицию знаков пунткуации в тексте
@@ -37,10 +26,10 @@ public class Decoding {
             }
         }
 
-        String origPassword = encoding.getString(listPassword);
+        String originalPassword = encoding.getString(listPassword);
         char whiteSpace = ' ';
-        if (Math.round(1.0f * findCountOfChar(whiteSpace) / origPassword.length() * 100) >= BruteForce.avgPercentageOfSpace && isPunctuationMarksOnRightPlace(origPassword)) {
-            return origPassword;
+        if (Math.round(1.0f * findCountOfChar(whiteSpace, originalPassword) / originalPassword.length() * 100) >= BruteForce.avgPercentageOfSpace && isPunctuationMarksOnRightPlace(originalPassword)) {
+            return originalPassword;
         }
         return ERROR_MESSAGE;
     }
@@ -50,8 +39,8 @@ public class Decoding {
      * @param character Символ
      * @return count Число вхождений символа в текст
      */
-    private int findCountOfChar(Character character){
-        char[] arr = originalPassword.toCharArray();
+    private int findCountOfChar(Character character, String password){
+        char[] arr = password.toCharArray();
         int count = 0;
         for (char c : arr){
             if (c == character){

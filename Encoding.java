@@ -11,16 +11,7 @@ import java.util.Scanner;
 public class Encoding {
     private String path;
     private static final String ERROR_MESSAGE = "Извините, однако мы не можем зашифровать ваш пароль, так как он не содержит хотя бы одного символа из кириллицы или знака пунктуации.";
-    private static final String FILE_NAME = "encryptedPassword.txt"; // Имя файла, в который будет записан зашифрованный пароль
-
-    /**
-     * Конструктор класса
-     */
-    public Encoding(){
-        String originalPassword = takePassword(); // Исходный пароль
-        String encryptedPassword = getEncryptedKey(originalPassword); // Зашифрованный пароль
-        createFileWithEncryptedPassword(FILE_NAME, encryptedPassword);
-    }
+    public final String FILE_NAME = "encryptedPassword.txt"; // Имя файла, в который будет записан зашифрованный пароль
 
     /**
      * Метод, получающий исходного пароля из текстового файла
@@ -59,7 +50,7 @@ public class Encoding {
      * @param originalPassword Исходный пароль
      * @return Зашифрованный пароль
      */
-    private String getEncryptedKey(String originalPassword) {
+    public String getEncryptedKey(String originalPassword) {
         ArrayList<Character> listAlphabet = getList(CryptoAlphabet.getCryptoAlphabet());
         ArrayList<Character> listPassword = getList(originalPassword);
         for (int i = 0; i < listPassword.size(); i++) {
