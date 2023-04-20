@@ -27,11 +27,22 @@ public class Decoding {
         }
 
         String originalPassword = encoding.getString(listPassword);
-        char whiteSpace = ' ';
-        if (Math.round(1.0f * findCountOfChar(whiteSpace, originalPassword) / originalPassword.length() * 100) >= BruteForce.avgPercentageOfSpace && isPunctuationMarksOnRightPlace(originalPassword)) {
+        if (isReallyPassword(originalPassword)) {
             return originalPassword;
         }
         return ERROR_MESSAGE;
+    }
+
+    /**
+     * Метод, который проверяет строку на правильное расставление пробелов и знаков пунктуации
+     * @param password Пароль
+     */
+    private boolean isReallyPassword(String password) {
+        char whiteSpace = ' ';
+        if (Math.round(1.0f * findCountOfChar(whiteSpace, password) / password.length() * 100) >= BruteForce.avgPercentageOfSpace && isPunctuationMarksOnRightPlace(password)) {
+            return true;
+        }
+        return false;
     }
 
     /**

@@ -40,7 +40,7 @@ public class StatisticalAnalysis {
     /**
      * Метод, создающий мапу, в которой собрана статистика по вхождению символов в тексте по убыванию
      * @param text Строка
-     * @return sortedMap Отсортированная по убыванию количества вхождений символа мапа
+     * @return sortedMap Отсортированная мапа по убыванию количества вхождений символа
      */
     private static Map<Character, Integer> getStatsFromText(String text){
         HashMap<Character, Integer> map = new HashMap<>();

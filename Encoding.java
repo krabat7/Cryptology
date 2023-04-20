@@ -19,7 +19,7 @@ public class Encoding {
      */
     public String takePassword(){
         String lineFromFile = null;
-        System.out.print("Введите путь расположения файла с паролем: ");
+        System.out.print("Введите путь расположения файла: ");
         Scanner scanner = new Scanner(System.in);
         path = scanner.nextLine();
         // Можно указать путь для разных ОС с разными разделителями
@@ -110,7 +110,7 @@ public class Encoding {
             }
         }
         Path filePath = Paths.get(filePathDirectory.toString(), fileName);
-        System.out.println("Полученный пароль: " + password);
+        System.out.println("Полученные данные: " + password);
         System.out.println("Пароль записан в директорию " + filePathDirectory);
         // Создание файла, если такой не сущетсвует
         if (Files.exists(filePath)){
