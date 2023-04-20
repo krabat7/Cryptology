@@ -35,7 +35,6 @@ public class Main {
                     int subActionA = takeInt();
                     switch (subActionA) {
                         case 1 -> {
-                            System.out.println("Результат шифрования:");
                             // Действия для шифврования
                             originalPassword = encoding.takePassword();
                             encryptedPassword = encoding.getEncryptedKey(originalPassword); // Зашифрованный пароль
@@ -43,7 +42,6 @@ public class Main {
                             continueChoosing();
                         }
                         case 2 -> {
-                            System.out.println("Результат расшифровки");
                             // Действия расшифровки
                             Decoding decoding = new Decoding();
                             encryptedPassword = encoding.takePassword(); // Извлекаем зашифрованный пароль из файла
@@ -66,7 +64,6 @@ public class Main {
                     int subActionB = takeInt();
                     switch (subActionB) {
                         case 1 -> {
-                            System.out.println("Результат криптоанализа методом brute force");
                             // Действия для криптоанализа методом brute force
                             BruteForce bruteForce = new BruteForce();
                             encryptedPassword = encoding.takePassword();
@@ -82,8 +79,7 @@ public class Main {
                             System.out.println("Путь с файлом введен. Теперь введите путь дополнительного файла.");
                             String additionalText = encoding.takePassword();
                             originalPassword = statisticalAnalysis.getOriginalPasswordFromStat(encryptedPassword, additionalText);
-                            System.out.println("Результат криптоанализа методом статистического анализа");
-                            encoding.createFileWithEncryptedPassword(Decoding.FILE_NAME, "\nВозможный пароль - " + originalPassword);
+                            encoding.createFileWithEncryptedPassword(Decoding.FILE_NAME, " Возможный пароль - " + originalPassword);
                             continueChoosing();
                         }
                         default -> {
@@ -105,7 +101,7 @@ public class Main {
      */
     private static void continueChoosing(){
         try{
-            Thread.sleep(3000);
+            Thread.sleep(2000);
         } catch (InterruptedException e){
             e.printStackTrace();
         }
@@ -114,12 +110,13 @@ public class Main {
         System.out.println("1. Продолжить");
         System.out.println("2. Закрыть программу");
         System.out.print("Введите номер режима: ");
-        int answer = scanner.nextInt();
+        int answer = takeInt();
         switch (answer){
             case 1:
                 break;
             case 2:
                 shouldExit = true;
+                break;
             default:
                 System.out.println("Неверный номер режима!");
                 continueChoosing();

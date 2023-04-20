@@ -15,13 +15,16 @@ public class StatisticalAnalysis {
     public String getOriginalPasswordFromStat(String encryptedPassword, String additionalText){
         Map<Character, Integer> mapPassword = getStatsFromText(encryptedPassword); // Мапа со статисткой вхождений символа в пароль
         Map<Character, Integer> mapAdditionalText = getStatsFromText(additionalText); // Мапа со статисткой вхождений символа в дополнительный текст
+        if (mapPassword.size() == 0 || mapAdditionalText.size() == 0){
+            return "Один из файлов не имеет символов из криптоалфавита.";
+        }
 
         // Получаем итераторы для каждой мапы
         Iterator<Map.Entry<Character, Integer>> iterator1 = mapPassword.entrySet().iterator();
         Iterator<Map.Entry<Character, Integer>> iterator2 = mapAdditionalText.entrySet().iterator();
         ArrayList<Integer> listOfUsedChar = new ArrayList<>(); // Лист использованных индексов в пароле
 
-        while (iterator1.hasNext()) {
+        while (iterator1.hasNext() && iterator2.hasNext()) {
             Map.Entry<Character, Integer> entry1 = iterator1.next();
             Map.Entry<Character, Integer> entry2 = iterator2.next();
             Character oldChar = entry1.getKey(); // Получение символа из зашифрованного пароля
