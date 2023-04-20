@@ -1,13 +1,19 @@
 import java.util.Scanner;
 
+/**
+ * Класс, реализующий взаимодействие пользователя с программой и логику классов.
+ */
 public class Main {
+    static Scanner scanner;
+    static boolean shouldExit = false;
+
     /**
-     * Класс, реализующий взаимодействие пользователя с программой и логику классов.
+     * Метод, который реализует осоновную логику взаимодействия с пользователем через консоль
      */
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        scanner = new Scanner(System.in);
 
-        while (true) {
+        while (!shouldExit) {
             String originalPassword;
             String encryptedPassword;
 
@@ -16,75 +22,125 @@ public class Main {
             System.out.println("2. Криптоанализ");
             System.out.print("Введите номер действия: ");
 
-            int action = scanner.nextInt();
+            int action = takeInt();
             Encoding encoding = new Encoding();
 
             switch (action) {
-                case 1:
-                    System.out.println("Выбрано: Шифрование / расшифровка");
+                case 1 -> {
+                    System.out.println("Выбрано: Шифрование / расшифровка\n");
                     System.out.println("Выберите режим:");
                     System.out.println("1. Шифрование");
                     System.out.println("2. Расшифровка");
                     System.out.print("Введите номер режима: ");
-
-                    int subActionA = scanner.nextInt();
-
+                    int subActionA = takeInt();
                     switch (subActionA) {
-                        case 1:
+                        case 1 -> {
                             System.out.println("Результат шифрования:");
                             // Действия для шифврования
                             originalPassword = encoding.takePassword();
                             encryptedPassword = encoding.getEncryptedKey(originalPassword); // Зашифрованный пароль
                             encoding.createFileWithEncryptedPassword(encoding.FILE_NAME, encryptedPassword);
-                            break;
-                        case 2:
+                            continueChoosing();
+                        }
+                        case 2 -> {
                             System.out.println("Результат расшифровки");
                             // Действия расшифровки
                             Decoding decoding = new Decoding();
                             encryptedPassword = encoding.takePassword(); // Извлекаем зашифрованный пароль из файла
                             originalPassword = decoding.getOriginalKey(encryptedPassword, CryptoKey.getCryptoKey()); // Расшифровка зашифрованного пароля
                             encoding.createFileWithEncryptedPassword(Decoding.FILE_NAME, originalPassword);
-                            break;
-                        default:
+                            continueChoosing();
+                        }
+                        default -> {
                             System.out.println("Неверный номер режима!");
+                            continueChoosing();
+                        }
                     }
-
-                    break;
-                case 2:
-                    System.out.println("Выбрано: Криптоанализ");
+                }
+                case 2 -> {
+                    System.out.println("Выбрано: Криптоанализ\n");
                     System.out.println("Выберите режим:");
                     System.out.println("1. Метод brute force");
                     System.out.println("2. Метод статистического анализа");
                     System.out.print("Введите номер режима: ");
-
-                    int subActionB = scanner.nextInt();
-
+                    int subActionB = takeInt();
                     switch (subActionB) {
-                        case 1:
+                        case 1 -> {
                             System.out.println("Результат криптоанализа методом brute force");
                             // Действия для криптоанализа методом brute force
                             BruteForce bruteForce = new BruteForce();
                             encryptedPassword = encoding.takePassword();
                             originalPassword = bruteForce.getOriginalKeyForBruteForce(encryptedPassword);
                             encoding.createFileWithEncryptedPassword(Decoding.FILE_NAME, originalPassword);
-                            break;
-                        case 2:
-                            System.out.println("Результат криптоанализа методом статистического анализа");
+                            continueChoosing();
+                        }
+                        case 2 -> {
                             // Действия для криптоанализа методом статистического анализа
-                            StatisticalAnalysis stat = new StatisticalAnalysis();
+                            StatisticalAnalysis statisticalAnalysis = new StatisticalAnalysis();
+                            System.out.println("Нужно ввести файл с зашифрованным паролем.");
                             encryptedPassword = encoding.takePassword();
+                            System.out.println("Путь с файлом введен. Теперь введите путь дополнительного файла.");
                             String additionalText = encoding.takePassword();
-                            originalPassword = stat.getOriginalPasswordFromStat(encryptedPassword, additionalText);
-                            encoding.createFileWithEncryptedPassword(Decoding.FILE_NAME, originalPassword);
-                            break;
-                        default:
+                            originalPassword = statisticalAnalysis.getOriginalPasswordFromStat(encryptedPassword, additionalText);
+                            System.out.println("Результат криптоанализа методом статистического анализа");
+                            encoding.createFileWithEncryptedPassword(Decoding.FILE_NAME, "\nВозможный пароль - " + originalPassword);
+                            continueChoosing();
+                        }
+                        default -> {
                             System.out.println("Неверный номер режима!");
+                            continueChoosing();
+                        }
                     }
-
-                    break;
-                default:
+                }
+                default -> {
                     System.out.println("Неверный номер режима!");
+                    continueChoosing();
+                }
             }
         }
+    }
+
+    /**
+     * Метод, который предлагает пользователю выбор между закрытием программы или ее продолжением
+     */
+    private static void continueChoosing(){
+        try{
+            Thread.sleep(3000);
+        } catch (InterruptedException e){
+            e.printStackTrace();
+        }
+        System.out.println("\nПродолжить работу в программе?");
+        System.out.println("Выберите режим:");
+        System.out.println("1. Продолжить");
+        System.out.println("2. Закрыть программу");
+        System.out.print("Введите номер режима: ");
+        int answer = scanner.nextInt();
+        switch (answer){
+            case 1:
+                break;
+            case 2:
+                shouldExit = true;
+            default:
+                System.out.println("Неверный номер режима!");
+                continueChoosing();
+        }
+    }
+
+    /**
+     * Метод, который выполняет проверку на введенное пользователем число
+     * @return Число с консоли
+     */
+    private static int takeInt(){
+        int number;
+        while (true) {
+            if (scanner.hasNextInt()) {
+                number = scanner.nextInt();
+                break;
+            } else {
+                System.out.println("Ошибка! Некорректный ввод. Попробуйте еще раз:");
+                scanner.next();
+            }
+        }
+        return number;
     }
 }
