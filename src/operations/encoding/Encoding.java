@@ -1,4 +1,7 @@
-package src;
+package src.operations.encoding;
+
+import src.operations.data.CryptoAlphabet;
+import src.operations.data.CryptoKey;
 
 import java.io.*;
 import java.nio.file.Files;

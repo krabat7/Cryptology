@@ -1,4 +1,4 @@
-package src;
+package src.operations.data;
 
 /**
  * Класс, описывающий криптографичесчкий ключ

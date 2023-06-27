@@ -1,4 +1,4 @@
-package src;
+package src.operations.decoding.withoutKey;
 
 import java.util.*;
 import java.util.ArrayList;

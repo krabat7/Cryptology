@@ -1,4 +1,8 @@
-package src;
+package src.operations.decoding.withKey;
+
+import src.operations.data.CryptoAlphabet;
+import src.operations.decoding.withoutKey.BruteForce;
+import src.operations.encoding.Encoding;
 
 import java.util.ArrayList;
 

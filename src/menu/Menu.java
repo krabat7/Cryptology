@@ -1,4 +1,10 @@
-package src;
+package src.menu;
+
+import src.operations.data.CryptoKey;
+import src.operations.decoding.withoutKey.BruteForce;
+import src.operations.decoding.withKey.Decoding;
+import src.operations.decoding.withoutKey.StatisticalAnalysis;
+import src.operations.encoding.Encoding;
 
 import java.util.Scanner;
 

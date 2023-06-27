@@ -1,4 +1,7 @@
-package src;
+package src.operations.decoding.withoutKey;
+
+import src.operations.data.CryptoAlphabet;
+import src.operations.decoding.withKey.Decoding;
 
 /**
  * Класс, реализующий расшифровку методом brute force (грубой силой)

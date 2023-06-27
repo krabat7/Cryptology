@@ -1,4 +1,6 @@
-package src;
+package src.main;
+
+import src.menu.Menu;
 
 public class Main {
     /**
